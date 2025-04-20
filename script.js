@@ -425,3 +425,222 @@ document.addEventListener('DOMContentLoaded', () => {
         ]);
     });
 });
+
+// Safety Tips Modal
+function showTipDetails(tipType) {
+    const modal = document.getElementById('tip-details-modal');
+    const title = document.getElementById('tip-details-title');
+    const content = document.getElementById('tip-details-content');
+    const statistics = document.getElementById('tip-statistics-content');
+
+    // Define tip details and statistics
+    const tipData = {
+        seatbelt: {
+            title: 'Seatbelt Safety',
+            content: `
+                <h3>Why Seatbelts Matter</h3>
+                <p>Seatbelts are your first line of defense in a crash. They:</p>
+                <ul>
+                    <li>Prevent ejection from the vehicle</li>
+                    <li>Distribute crash forces across the strongest parts of your body</li>
+                    <li>Help maintain control of the vehicle</li>
+                    <li>Work with airbags to provide maximum protection</li>
+                </ul>
+                <h3>Proper Seatbelt Usage</h3>
+                <ul>
+                    <li>Wear the lap belt low across your hips</li>
+                    <li>Position the shoulder belt across your chest</li>
+                    <li>Never tuck the shoulder belt under your arm</li>
+                    <li>Ensure all passengers are properly buckled</li>
+                </ul>
+            `,
+            statistics: `
+                <ul>
+                    <li>Reduces risk of fatal injury by 45%</li>
+                    <li>Reduces risk of moderate to critical injury by 50%</li>
+                    <li>Prevents 15,000 deaths annually</li>
+                </ul>
+            `
+        },
+        distraction: {
+            title: 'Distracted Driving',
+            content: `
+                <h3>Types of Distractions</h3>
+                <ul>
+                    <li>Visual: Taking your eyes off the road</li>
+                    <li>Manual: Taking your hands off the wheel</li>
+                    <li>Cognitive: Taking your mind off driving</li>
+                </ul>
+                <h3>Common Distractions</h3>
+                <ul>
+                    <li>Texting or using a phone</li>
+                    <li>Eating or drinking</li>
+                    <li>Talking to passengers</li>
+                    <li>Adjusting vehicle controls</li>
+                    <li>Using navigation systems</li>
+                </ul>
+                <h3>Prevention Tips</h3>
+                <ul>
+                    <li>Put your phone away or use hands-free mode</li>
+                    <li>Set up navigation before driving</li>
+                    <li>Pull over to eat or make adjustments</li>
+                    <li>Keep conversations brief while driving</li>
+                </ul>
+            `,
+            statistics: `
+                <ul>
+                    <li>Causes 9% of all fatal crashes</li>
+                    <li>Involved in 15% of injury crashes</li>
+                    <li>Increases crash risk by 3 times</li>
+                </ul>
+            `
+        },
+        speed: {
+            title: 'Speed Limits',
+            content: `
+                <h3>Understanding Speed Limits</h3>
+                <p>Speed limits are set based on:</p>
+                <ul>
+                    <li>Road conditions and design</li>
+                    <li>Traffic patterns</li>
+                    <li>Pedestrian activity</li>
+                    <li>Weather conditions</li>
+                </ul>
+                <h3>Speed Management Tips</h3>
+                <ul>
+                    <li>Always obey posted speed limits</li>
+                    <li>Reduce speed in adverse weather</li>
+                    <li>Adjust speed for traffic conditions</li>
+                    <li>Maintain safe following distances</li>
+                    <li>Be aware of speed limit changes</li>
+                </ul>
+            `,
+            statistics: `
+                <ul>
+                    <li>Speeding contributes to 26% of all traffic fatalities</li>
+                    <li>Increases stopping distance by 2-3 times</li>
+                    <li>Reduces reaction time by 50%</li>
+                </ul>
+            `
+        },
+        weather: {
+            title: 'Weather Conditions',
+            content: `
+                <h3>Driving in Different Weather Conditions</h3>
+                <h4>Rain</h4>
+                <ul>
+                    <li>Reduce speed by 1/3</li>
+                    <li>Use headlights</li>
+                    <li>Increase following distance</li>
+                    <li>Watch for hydroplaning</li>
+                </ul>
+                <h4>Snow/Ice</h4>
+                <ul>
+                    <li>Reduce speed by 1/2</li>
+                    <li>Use winter tires</li>
+                    <li>Brake gently and early</li>
+                    <li>Keep extra distance</li>
+                </ul>
+                <h4>Fog</h4>
+                <ul>
+                    <li>Use low-beam headlights</li>
+                    <li>Reduce speed significantly</li>
+                    <li>Use fog lights if available</li>
+                    <li>Increase following distance</li>
+                </ul>
+            `,
+            statistics: `
+                <ul>
+                    <li>22% of crashes occur in adverse weather</li>
+                    <li>Rain increases crash risk by 34%</li>
+                    <li>Snow increases crash risk by 2-3 times</li>
+                </ul>
+            `
+        },
+        maintenance: {
+            title: 'Vehicle Maintenance',
+            content: `
+                <h3>Regular Maintenance Checklist</h3>
+                <ul>
+                    <li>Check tire pressure and tread monthly</li>
+                    <li>Change oil every 3,000-5,000 miles</li>
+                    <li>Inspect brakes regularly</li>
+                    <li>Check fluid levels weekly</li>
+                    <li>Test lights and signals</li>
+                    <li>Replace wiper blades annually</li>
+                </ul>
+                <h3>Safety Systems</h3>
+                <ul>
+                    <li>Test airbag system</li>
+                    <li>Check seatbelt functionality</li>
+                    <li>Verify ABS system operation</li>
+                    <li>Test traction control</li>
+                </ul>
+            `,
+            statistics: `
+                <ul>
+                    <li>Prevents 45% of mechanical failures</li>
+                    <li>Reduces crash risk by 25%</li>
+                    <li>Improves fuel efficiency by 3-4%</li>
+                </ul>
+            `
+        },
+        emergency: {
+            title: 'Emergency Preparedness',
+            content: `
+                <h3>Emergency Kit Essentials</h3>
+                <ul>
+                    <li>First aid kit</li>
+                    <li>Flashlight and batteries</li>
+                    <li>Jumper cables</li>
+                    <li>Basic tools</li>
+                    <li>Emergency blanket</li>
+                    <li>Water and non-perishable food</li>
+                    <li>Road flares or reflectors</li>
+                    <li>Spare tire and jack</li>
+                </ul>
+                <h3>Emergency Procedures</h3>
+                <ul>
+                    <li>Pull over safely</li>
+                    <li>Use hazard lights</li>
+                    <li>Call for help</li>
+                    <li>Stay with your vehicle</li>
+                    <li>Know your location</li>
+                </ul>
+            `,
+            statistics: `
+                <ul>
+                    <li>Reduces response time by 30%</li>
+                    <li>Improves survival rate by 40%</li>
+                    <li>Prevents 15% of secondary incidents</li>
+                </ul>
+            `
+        }
+    };
+
+    // Set modal content based on tip type
+    if (tipData[tipType]) {
+        title.textContent = tipData[tipType].title;
+        content.innerHTML = tipData[tipType].content;
+        statistics.innerHTML = tipData[tipType].statistics;
+        modal.style.display = 'block';
+    }
+}
+
+// Close modals when clicking the close button
+document.querySelectorAll('.close-modal').forEach(button => {
+    button.addEventListener('click', () => {
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
+        });
+    });
+});
+
+// Close modals when clicking outside
+window.addEventListener('click', (event) => {
+    document.querySelectorAll('.modal').forEach(modal => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});

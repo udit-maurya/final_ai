@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driving Safety AI Advisor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button id="theme-toggle-btn">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+        </button>
+    </div>
+    <div class="app-container">
+        <div class="background-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Driving Safety AI</h1>
+                </div>
+                <button class="sidebar-toggle">
+                    <i class="fas fa-bars hamburger-icon"></i>
+                    <i class="fas fa-times close-icon"></i>
+                </button>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active" data-section="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </li>
+                    <li data-section="safety-tips">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Safety Tips</span>
+                    </li>
+                    <li data-section="resources">
+                        <i class="fas fa-book"></i>
+                        <span>Resources</span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section class="section dashboard active">
+                <h2>Welcome to Driving Safety AI Advisor</h2>
+                
+                <div class="dashboard-grid">
+                    <div class="safety-calculator">
+                        <h3><i class="fas fa-calculator"></i> Safety Calculator</h3>
+                        <div class="calculator-grid">
+                            <div class="calculator-input">
+                                <div class="form-group">
+                                    <label for="driving-hours">Daily Driving Hours:</label>
+                                    <input type="number" id="driving-hours" min="0" max="24" placeholder="Hours per day">
+                                </div>
+                                <div class="form-group">
+                                    <label for="driving-speed">Average Speed (mph):</label>
+                                    <input type="number" id="driving-speed" min="0" max="200" placeholder="Speed in mph">
+                                </div>
+                                <div class="form-group">
+                                    <label for="weather-condition">Weather Condition:</label>
+                                    <select id="weather-condition">
+                                        <option value="clear">Clear</option>
+                                        <option value="rain">Rain</option>
+                                        <option value="snow">Snow</option>
+                                        <option value="fog">Fog</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="night-driving">Night Driving:</label>
+                                    <select id="night-driving">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>
+                                    </select>
+                                </div>
+                                <button class="btn primary" id="calculate-safety">Calculate Safety Tips</button>
+                            </div>
+                            <div class="calculator-results">
+                                <h4>Safety Analysis</h4>
+                                <div class="results-container">
+                                    <div id="safety-score-display"></div>
+                                    <div id="safety-recommendations"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="safety-stats">
+                        <h3><i class="fas fa-chart-line"></i> Safety Statistics</h3>
+                        <div class="stats-container">
+                            <canvas id="safetyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <button class="btn primary" id="ask-ai-btn">Ask AI Assistant</button>
+                    <button class="btn secondary" id="view-tips-btn">View Safety Tips</button>
+                </div>
+            </section>
+
+            <section class="section safety-tips">
+                <h2>Safety Tips</h2>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <i class="fas fa-seat-belt"></i>
+                        <h3>Seatbelt Safety</h3>
+                        <p>Always wear your seatbelt and ensure all passengers are properly buckled.</p>
+                        <button class="btn secondary" onclick="showTipDetails('seatbelt')">Learn More</button>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Distracted Driving</h3>
+                        <p>Avoid using your phone or other distractions while driving.</p>
+                        <button class="btn secondary" onclick="showTipDetails('distraction')">Learn More</button>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h3>Speed Limits</h3>
+                        <p>Follow posted speed limits and adjust for weather conditions.</p>
+                        <button class="btn secondary" onclick="showTipDetails('speed')">Learn More</button>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-cloud-rain"></i>
+                        <h3>Weather Conditions</h3>
+                        <p>Adjust your driving for rain, snow, fog, and other weather conditions.</p>
+                        <button class="btn secondary" onclick="showTipDetails('weather')">Learn More</button>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-car-battery"></i>
+                        <h3>Vehicle Maintenance</h3>
+                        <p>Regular maintenance keeps your vehicle safe and reliable.</p>
+                        <button class="btn secondary" onclick="showTipDetails('maintenance')">Learn More</button>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Emergency Preparedness</h3>
+                        <p>Keep an emergency kit in your vehicle for unexpected situations.</p>
+                        <button class="btn secondary" onclick="showTipDetails('emergency')">Learn More</button>
+                    </div>
+                </div>
+                
+                <!-- Tip Details Modal -->
+                <div id="tip-details-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-modal">&times;</span>
+                        <h2 id="tip-details-title">Safety Tip Details</h2>
+                        <div id="tip-details-content"></div>
+                        <div class="tip-statistics">
+                            <h3>Safety Impact</h3>
+                            <div id="tip-statistics-content"></div>
+                        </div>
+                        <div class="tip-actions">
+                            <button class="btn primary" id="save-tip-btn">Save to Favorites</button>
+                            <button class="btn secondary" id="share-tip-btn">Share</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section resources">
+                <h2>Safety Resources</h2>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <i class="fas fa-video"></i>
+                        <h3>Video Tutorials</h3>
+                        <p>Visual guides for common driving scenarios</p>
+                        <button class="btn secondary" onclick="showResourceDetails('videos')">Watch Now</button>
+                    </div>
+                    <div class="resource-card">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Route Planning</h3>
+                        <p>Tools for safe route navigation</p>
+                        <button class="btn secondary" onclick="showResourceDetails('route')">Plan Route</button>
+                    </div>
+                    <div class="resource-card">
+                        <i class="fas fa-phone-alt"></i>
+                        <h3>Emergency Contacts</h3>
+                        <p>Important numbers for roadside assistance</p>
+                        <button class="btn secondary" onclick="showResourceDetails('emergency')">View Contacts</button>
+                    </div>
+                </div>
+                
+                <!-- Resource Details Modal -->
+                <div id="resource-details-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-modal">&times;</span>
+                        <h2 id="resource-details-title">Resource Details</h2>
+                        <div id="resource-details-content"></div>
+                        <div class="resource-actions">
+                            <button class="btn primary" id="download-resource-btn">Download</button>
+                            <button class="btn secondary" id="share-resource-btn">Share</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div class="chatbot-container" id="chat-container">
+            <div class="chatbot-header">
+                <h3 class="chatbot-title">
+                    <i class="fas fa-robot"></i>
+                    <span>AI Safety Assistant</span>
+                </h3>
+                <button class="close-chat-btn" id="close-chat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chat-messages">
+                <div class="message">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        Hello! I'm your AI assistant. How can I help you today?
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chat-input" placeholder="Type your message...">
+                <button id="send-message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <button class="chatbot-toggle" id="chatbot-toggle">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <script src="chatbot.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
